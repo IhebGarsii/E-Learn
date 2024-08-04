@@ -9,12 +9,14 @@ const {
   getStutent,
   deleteAcount,
   deleteAcountByAdmin,
+  getUserById,
 } = require("../controller/userController");
 const userRouer = express.Router();
 
 userRouer.post("/registerInstroctor", registerInstroctor);
 userRouer.post("/login", login);
 userRouer.get("/getStutent", getStutent);
+userRouer.get("/getUserById/:idUser", getUserById);
 userRouer.get("/getAllInstroctor", getAllInstroctor);
 userRouer.get("/getAllStutent", getAllStutent);
 userRouer.get("/getInstroctor", getInstroctor);

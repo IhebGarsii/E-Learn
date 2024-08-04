@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import Courses from "../pages/courses/Courses";
 import Login from "../pages/login/Login";
 import InstructorCourses from "../pages/InstructorCourses";
+
 function SideBar() {
   const [open, setOpen] = useState(false);
   const Menus = [

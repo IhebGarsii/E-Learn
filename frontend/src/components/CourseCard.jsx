@@ -27,7 +27,7 @@ function CourseCard({ cours }) {
       <div className="px-5 pb-5 ">
         <Link to="/detail">
           <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-            {description}
+            {}
           </h5>
         </Link>
         <div className="flex items-center mt-2.5 mb-5">

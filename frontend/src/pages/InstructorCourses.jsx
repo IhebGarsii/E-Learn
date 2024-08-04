@@ -65,7 +65,7 @@ function InstructorCourses() {
     if (data.video && data.video[0]) {
       formData.append("video", data.video[0]);
     }
-
+    formData.append("instructorId", localStorage.getItem("idUser"));
     // Send form data to the API
     mutate(formData);
   };

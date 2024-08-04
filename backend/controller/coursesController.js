@@ -2,7 +2,7 @@ const coursesModel = require("../model/coursesModel");
 
 const getAllCourses = async (req, res) => {
   try {
-    const courses = await coursesModel.find();
+    const courses = await coursesModel.find().populate("instructorId");
     res.status(200).json(courses);
   } catch (error) {
     console.log(error);
@@ -55,8 +55,6 @@ const rateCourse = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-
-
 
 const AddCourse = async (req, res) => {
   try {
