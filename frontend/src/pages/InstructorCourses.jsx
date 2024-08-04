@@ -71,7 +71,7 @@ function InstructorCourses() {
   };
 
   return (
-    <div className="w-full h-screen lg:w-[40%] mx-auto">
+    <div className="w-full min-h-screen lg:w-[40%] mx-auto">
       <form
         onSubmit={handleSubmit(submitCourse)}
         className="w-full flex flex-col gap-2"
@@ -174,6 +174,22 @@ function InstructorCourses() {
         {isSuccess && (
           <p className="text-green-500">Course added successfully!</p>
         )}
+        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
+        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
+        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
+        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
+        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
+        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
+        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
+        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
+        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
+        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
+        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
+        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
+        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
+        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
+        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
+        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
       </form>
     </div>
   );

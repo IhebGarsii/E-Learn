@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { firstTags } from "../data/data";
 import MultiRangeSlider from "multi-range-slider-react";
+import { firstTags } from "../data/data";
 
-function Filter({ courses }) {
-  const [filter, setFilter] = useState([]);
+function Filter({ onFilterChange, courses }) {
   const [minValue, setMinValue] = useState(0);
   const [maxValue, setMaxValue] = useState(100);
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [tags, setTags] = useState([]);
 
-  const { register, handleSubmit, reset, getValues } = useForm();
-
-  useEffect(() => {
-    setFilter(courses);
-  }, [courses]);
+  const { register, handleSubmit, reset } = useForm({
+    defaultValues: {
+      duration: "",
+    },
+  });
 
   useEffect(() => {
     if (selectedCategory.length > 0) {
@@ -33,7 +32,6 @@ function Filter({ courses }) {
 
   const resetFilter = () => {
     reset();
-    setFilter(courses);
     setSelectedCategory([]);
     setMinValue(0);
     setMaxValue(100);
@@ -68,35 +66,34 @@ function Filter({ courses }) {
         selectedTags.length === 0 ||
         selectedTags.some((tag) => course.tags.includes(tag)); // Ensure at least one tag matches
 
-      console.log("Course:", course);
-      console.log("isWithinPriceRange:", isWithinPriceRange);
-      console.log("isMatchingHeadTags:", isMatchingHeadTags);
-      console.log("isMatchingTags:", isMatchingTags);
-
       return isWithinPriceRange && isMatchingHeadTags && isMatchingTags;
     });
 
     console.log("Filtered Courses:", filteredCourses);
-    setFilter(filteredCourses);
+    onFilterChange(filteredCourses); // Call the passed function
   };
 
-
   return (
-    <form onSubmit={handleSubmit(onSubmitFilter)} className="car-list-filter">
-      <div className="availability">
-        <h3>AVAILABLE ON</h3>
-        <div className="date-filter-container">
-          <label htmlFor="duration">Duration</label>
-          <input
-            type="text"
-            className="date-filter"
-            placeholder="Duration"
-            {...register("duration")}
-          />
-        </div>
+    <form
+      onSubmit={handleSubmit(onSubmitFilter)}
+      className="bg-gray-200 p-4 sm:p-5 rounded-md shadow-md w-full overflow-x-hidden"
+    >
+      <div className="flex flex-col space-y-2">
+        <label htmlFor="duration" className="font-medium">
+          Duration
+        </label>
+        <input
+          type="text"
+          id="duration"
+          className="p-2 border rounded"
+          placeholder="Duration"
+          {...register("duration")}
+        />
       </div>
-      <div className="price-filter">
-        <label htmlFor="price">PRICE a day</label>
+      <div className="flex flex-col space-y-2">
+        <label htmlFor="price" className="font-medium">
+          PRICE a day
+        </label>
         <MultiRangeSlider
           min={0}
           max={300}
@@ -104,44 +101,55 @@ function Filter({ courses }) {
           minValue={minValue}
           maxValue={maxValue}
           onInput={handleInput}
+          className="w-full"
         />
-        <div className="ranged-input">
-          <span>{minValue}</span> <span>{maxValue}</span>
-        </div>
-        <div className="filter-select">
-          <h2>CATEGORY</h2>
-          <select
-            multiple
-            onChange={(e) =>
-              setSelectedCategory(
-                Array.from(e.target.selectedOptions, (option) => option.value)
-              )
-            }
-            className="filter-select"
-          >
-            <option value="">Select Category</option>
-            {firstTags.map(([category]) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="filter-checkbox">
-          <h2>Tags</h2>
-          {tags.map((tag) => (
-            <div className="filter-label" key={tag}>
-              <input type="checkbox" id={tag} {...register(tag)} />
-              <label htmlFor={tag}>
-                {tag.charAt(0).toUpperCase() + tag.slice(1)}
-              </label>
-            </div>
-          ))}
+        <div className="flex justify-between">
+          <span>{minValue}</span>
+          <span>{maxValue}</span>
         </div>
       </div>
-      <div className="filter-actions">
-        <button type="submit">Filter</button>
-        <button type="button" onClick={resetFilter}>
+      <div className="flex flex-col space-y-2">
+        <h2 className="font-medium">CATEGORY</h2>
+        <select
+          multiple
+          onChange={(e) =>
+            setSelectedCategory(
+              Array.from(e.target.selectedOptions, (option) => option.value)
+            )
+          }
+          className="p-2 border rounded"
+        >
+          <option value="">Select Category</option>
+          {firstTags.map(([category]) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="flex flex-col space-y-2">
+        <h2 className="font-medium">Tags</h2>
+        {tags.map((tag) => (
+          <div className="flex items-center space-x-2" key={tag}>
+            <input type="checkbox" id={tag} {...register(tag)} />
+            <label htmlFor={tag}>
+              {tag.charAt(0).toUpperCase() + tag.slice(1)}
+            </label>
+          </div>
+        ))}
+      </div>
+      <div className="flex space-x-2">
+        <button
+          type="submit"
+          className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+        >
+          Filter
+        </button>
+        <button
+          type="button"
+          onClick={resetFilter}
+          className="bg-gray-500 text-white p-2 rounded hover:bg-gray-600"
+        >
           Reset
         </button>
       </div>

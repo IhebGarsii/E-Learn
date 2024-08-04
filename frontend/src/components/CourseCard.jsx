@@ -2,13 +2,21 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function CourseCard({ cours }) {
+  if (!cours) {
+    return <div>No course data available</div>;
+  }
+
   const { thumbnail, description, avgRate } = cours;
 
+  // Ensure avgRate and avgRate.rate are valid numbers
+  const rate = avgRate?.rate || 0;
+  const formattedRate = typeof rate === "number" ? rate.toFixed(1) : "0.0";
+
   // Calculate the number of filled stars
-  const numFilledStars = Math.round(avgRate.rate);
+  const numFilledStars = Math.round(rate);
 
   return (
-    <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div className="w-full  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <Link to="/detail">
         <img
           className="p-8 rounded-t-lg"
@@ -16,7 +24,7 @@ function CourseCard({ cours }) {
           alt="Course thumbnail"
         />
       </Link>
-      <div className="px-5 pb-5">
+      <div className="px-5 pb-5 ">
         <Link to="/detail">
           <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
             {description}
@@ -38,7 +46,7 @@ function CourseCard({ cours }) {
             ))}
           </div>
           <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">
-            {avgRate.rate.toFixed(1)}
+            {formattedRate}
           </span>
         </div>
         <div className="flex items-center justify-between">

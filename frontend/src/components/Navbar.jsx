@@ -10,7 +10,7 @@ function Navbar() {
   };
 
   return (
-    <div className="font-[Poppins] bg-gradient-to-t from-[#fbc2eb] to-[#a6c1ee]">
+    <div className="fixed w-full z-10 font-[Poppins] bg-gradient-to-t from-[#fbc2eb] to-[#a6c1ee]">
       <header className="bg-white">
         <nav className="flex justify-between items-center w-[92%] mx-auto">
           <div>
@@ -21,8 +21,8 @@ function Navbar() {
             />
           </div>
           <div
-            className={`nav-links z-50 duration-500 md:static absolute bg-white md:min-h-fit min-h-[60vh] left-0 transition-transform ${
-              menuOpen ? "top-[11%]" : "top-[-100%]"
+            className={`nav-links z-50 duration-500 md:static absolute bg-white md:min-h-fit min-h-[40vh] left-0 transition-transform ${
+              menuOpen ? "top-[90%]" : "top-[-600%]"
             } w-full flex items-center px-5`}
           >
             <ul className="flex md:flex-row flex-col md:items-center md:gap-[4vw] mx-auto gap-8">
@@ -62,7 +62,7 @@ function Navbar() {
             </Link>
             <CiMenuBurger
               onClick={onToggleMenu}
-              className="text-3xl cursor-pointer md:hidden"
+              className="text-3xl cursor-pointer  md:hidden"
             />
           </div>
         </nav>

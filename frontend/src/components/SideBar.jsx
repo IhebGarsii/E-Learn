@@ -22,15 +22,15 @@ function SideBar() {
   ];
 
   return (
-    <div className="flex">
+    <div className="flex  ">
       <div
         className={` ${
           open ? "w-72" : "w-20 "
-        } bg-dark-purple h-screen p-5  pt-8 relative duration-300`}
+        } bg-dark-purple min-h-screen  p-5  pt-20 relative duration-300  `}
       >
         <img
           src="./src/assets/control.png"
-          className={`absolute cursor-pointer -right-3 top-9 w-7 border-dark-purple
+          className={`absolute cursor-pointer -right-3 top-20 w-7 border-dark-purple
            border-2 rounded-full  ${!open && "rotate-180"}`}
           onClick={() => setOpen(!open)}
         />
@@ -69,7 +69,7 @@ function SideBar() {
           ))}
         </ul>
       </div>
-      <div className="h-screen flex-1 p-7">
+      <div className="min-h-screen  overflow-hidden flex-1 p-7">
         <Routes>
           <Route path="/Courses" element={<Courses />} />
           <Route path="login" element={<Login />} />
