@@ -1,25 +1,32 @@
 import React, { useEffect } from "react";
+import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
+import { useMutation } from "@tanstack/react-query";
+import { signin } from "../../api/userAPI";
 function Login() {
-  const handleCallback = (response) => {
-    const user = jwtDecode(response.credential);
-    console.log(user);
+  const { mutate: mutateLogin } = useMutation({
+    mutationFn: (data) => signin(data),
+    onSuccess: (data) => {
+      console.log(data);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+  const handleGoogleLogin = (credentialResponse) => {
+    const user = jwtDecode(credentialResponse.credential);
+    const data = { email: user.email, google: true };
+    mutateLogin(data);
   };
-  useEffect(() => {
-    google.accounts.id.initialize({
-      client_id:
-        "745484482146-nb1euo7dj38rge6cb5c4mre2u3k0vsqc.apps.googleusercontent.com",
-      callback: handleCallback,
-    });
-    google.accounts.id.renderButton(document.getElementById("signInDiv"), {
-      theme: "outline",
-      size: "marge",
-    });
-  }, []);
   return (
-    <div>
-      <div className=" absolute top-[20%]" id="signInDiv"></div>
-    </div>
+    <>
+      <GoogleLogin
+        onSuccess={handleGoogleLogin}
+        onError={() => {
+          console.log("Login Failed");
+        }}
+      />
+    </>
   );
 }
 

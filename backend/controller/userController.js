@@ -3,11 +3,23 @@ const userModel = require("../model/userModel");
 const { genSalt } = require("bcrypt");
 
 const createToken = (id) => {
-  return sign({ id }, process.env.SECRET, { expireIn: "3d" });
+  return sign({ id }, process.env.SECRET, { expiresIn: "3d" });
 };
 
 const registerInstroctor = async (req, res) => {
   try {
+    if (req.body.google) {
+      const user = await userModel.find({ email: req.email });
+      if (user) {
+        token = createToken(user._id);
+        return res.status(200).json({ user, token });
+      } else {
+        const salt = await bycript.genSalt(10);
+        const hash = await bycript.hash(user.password, salt);
+        const newUser = userModel.create({ ...req.body, password: hash });
+      }
+    }
+
     const user = await userModel.find({ email: req.email });
     if (user) {
       return res.status(300).json("email is used");
@@ -26,18 +38,29 @@ const registerInstroctor = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const user = await userModel.find({ email });
+    if (req.body.google) {
+      const { email } = req.body;
+      const user = await userModel.find({ email });
 
-    if (!user) {
-      return res.status(404).json("Email or Password Incorrect");
+      if (!user) {
+        return res.status(404).json("User Not Found");
+      }
+      token = createToken(user._id);
+      return res.status(200).json({ user, token });
+    } else {
+      const { email, password } = req.body;
+      const user = await userModel.find({ email });
+
+      if (!user) {
+        return res.status(404).json("Email or Password Incorrect");
+      }
+      const match = await bycript.compare(user, password);
+      if (!match) {
+        return res.status(404).json("Email or Password Incorrect");
+      }
+      token = createToken(user._id);
+      return res.status(200).json({ user, token });
     }
-    const match = await bycript.compare(user, password);
-    if (!match) {
-      return res.status(404).json("Email or Password Incorrect");
-    }
-    token = createToken(user._id);
-    return res.status(200).json({ user, token });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: error.message });
