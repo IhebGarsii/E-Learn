@@ -174,22 +174,7 @@ function InstructorCourses() {
         {isSuccess && (
           <p className="text-green-500">Course added successfully!</p>
         )}
-        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
-        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
-        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
-        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
-        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
-        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
-        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
-        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
-        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
-        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
-        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
-        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
-        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
-        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
-        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
-        <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
+     
       </form>
     </div>
   );

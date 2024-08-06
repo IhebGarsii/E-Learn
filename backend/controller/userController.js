@@ -8,7 +8,7 @@ const createToken = (id) => {
 
 const registerInstroctor = async (req, res) => {
   try {
-    if (req.body.google) {
+    /*  if (req.body.google) {
       const user = await userModel.find({ email: req.email });
       if (user) {
         token = createToken(user._id);
@@ -18,7 +18,7 @@ const registerInstroctor = async (req, res) => {
         const hash = await bycript.hash(user.password, salt);
         const newUser = userModel.create({ ...req.body, password: hash });
       }
-    }
+    } */
 
     const user = await userModel.find({ email: req.email });
     if (user) {
@@ -41,10 +41,12 @@ const login = async (req, res) => {
     if (req.body.google) {
       const { email } = req.body;
       const user = await userModel.find({ email });
+      console.log(user);
 
-      if (!user) {
-        return res.status(404).json("User Not Found");
+      if (user.length === 0) {
+        return res.status(404).json("User Not Found please regester");
       }
+
       token = createToken(user._id);
       return res.status(200).json({ user, token });
     } else {

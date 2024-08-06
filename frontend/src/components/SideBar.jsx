@@ -70,7 +70,7 @@ function SideBar() {
           ))}
         </ul>
       </div>
-      <div className="min-h-screen  overflow-hidden flex-1 p-7">
+      <div className="min-h-screen  overflow-hidden flex-1">
         <Routes>
           <Route path="/Courses" element={<Courses />} />
           <Route path="login" element={<Login />} />
