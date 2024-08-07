@@ -1,6 +1,6 @@
 const { sign } = require("jsonwebtoken");
 const userModel = require("../model/userModel");
-const { genSalt } = require("bcrypt");
+const bcrypt = require("bcrypt");
 
 const createToken = (id) => {
   return sign({ id }, process.env.SECRET, { expiresIn: "3d" });
@@ -8,25 +8,17 @@ const createToken = (id) => {
 
 const registerInstroctor = async (req, res) => {
   try {
-    /*  if (req.body.google) {
-      const user = await userModel.find({ email: req.email });
-      if (user) {
-        token = createToken(user._id);
-        return res.status(200).json({ user, token });
-      } else {
-        const salt = await bycript.genSalt(10);
-        const hash = await bycript.hash(user.password, salt);
-        const newUser = userModel.create({ ...req.body, password: hash });
-      }
-    } */
+    console.log(req.body);
 
-    const user = await userModel.find({ email: req.email });
-    if (user) {
+    const user = await userModel.find({ email: req.body.email });
+    if (user.length > 0) {
       return res.status(300).json("email is used");
     }
-    const salt = await bycript.genSalt(10);
-    const hash = await bycript.hash(user.password, salt);
-    const newUser = userModel.create({ ...req.body, password: hash });
+    const image = req.file.originalname;
+    console.log(image);
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(req.body.password, salt);
+    const newUser = userModel.create({ ...req.body, password: hash, image });
     if (newUser) {
       return res.status(201).json(newUser);
     }
@@ -40,10 +32,10 @@ const login = async (req, res) => {
   try {
     if (req.body.google) {
       const { email } = req.body;
-      const user = await userModel.find({ email });
+      const user = await userModel.findOne({ email });
       console.log(user);
 
-      if (user.length === 0) {
+      if (user === null || user.length === 0) {
         return res.status(404).json("User Not Found please regester");
       }
 
@@ -51,12 +43,14 @@ const login = async (req, res) => {
       return res.status(200).json({ user, token });
     } else {
       const { email, password } = req.body;
-      const user = await userModel.find({ email });
+      const user = await userModel.findOne({ email });
 
       if (!user) {
-        return res.status(404).json("Email or Password Incorrect");
+        return res.status(404).json("Email or Password Incorrectt");
       }
-      const match = await bycript.compare(user, password);
+
+      const match = await bcrypt.compare(password, user.password);
+
       if (!match) {
         return res.status(404).json("Email or Password Incorrect");
       }

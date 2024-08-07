@@ -13,8 +13,9 @@ const getAllCourses = async (req, res) => {
 };
 const getCourse = async (req, res) => {
   try {
-    const { idUser } = req.params;
-    const course = await coursesModel.findById(idUser);
+    const { idCourse } = req.params;
+    const course = await coursesModel.findById(idCourse);
+    console.log(course);
     if (!course) {
       return res.status(404).json({ error: "No Courses Found" });
     }

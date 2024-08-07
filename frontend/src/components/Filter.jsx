@@ -35,6 +35,7 @@ function Filter({ onFilterChange, courses }) {
     setSelectedCategory([]);
     setMinValue(0);
     setMaxValue(100);
+    onFilterChange(courses);
   };
 
   const handleInput = (e) => {
@@ -43,10 +44,7 @@ function Filter({ onFilterChange, courses }) {
   };
 
   const onSubmitFilter = (data) => {
-    console.log("Form Data:", data);
-    console.log("Selected Category:", selectedCategory);
-    console.log("Min Value:", minValue);
-    console.log("Max Value:", maxValue);
+  
 
     const filteredCourses = courses.filter((course) => {
       // Check price range

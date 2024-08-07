@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userModel = new Schema({
- 
   email: {
     type: String,
     required: true,
@@ -29,9 +28,9 @@ const userModel = new Schema({
     type: String,
     trim: true,
   },
-  profilePicture: {
+
+  image: {
     type: String,
-    trim: true,
   },
   courses: [
     {

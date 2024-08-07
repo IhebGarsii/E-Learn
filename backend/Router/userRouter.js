@@ -1,4 +1,6 @@
 const express = require("express");
+const multer = require("multer");
+const path = require("path");
 const {
   registerInstroctor,
   registerStudent,
@@ -12,8 +14,24 @@ const {
   getUserById,
 } = require("../controller/userController");
 const userRouer = express.Router();
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, "uploads/"); // Directory to store uploaded files
+    },
+    filename: (req, file, cb) => {
+      // Extract the original file extension
+      const ext = path.extname(file.originalname);
 
-userRouer.post("/registerInstroctor", registerInstroctor);
+      // Use the original file name, ensuring it’s unique (you may use a timestamp to avoid conflicts)
+      const filename = file.originalname;
+
+      cb(null, filename);
+    },
+  }),
+});
+
+userRouer.post("/register", upload.single("image"), registerInstroctor);
 userRouer.post("/login", login);
 userRouer.get("/getStutent", getStutent);
 userRouer.get("/getUserById/:idUser", getUserById);

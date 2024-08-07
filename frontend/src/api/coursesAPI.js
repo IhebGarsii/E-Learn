@@ -11,9 +11,9 @@ export const getAllCourses = async () => {
   }
 };
 
-export const getCourse = async () => {
+export const getCourse = async (idCourse) => {
   try {
-    const response = await fetch("/getCourse", {
+    const response = await fetch(`${BASE_URL}/getCourse/${idCourse}`, {
       method: "GET",
     });
     return await response.json();

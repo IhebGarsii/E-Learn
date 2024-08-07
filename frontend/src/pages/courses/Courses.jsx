@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllCourses } from "../../api/coursesAPI";
 import CourseCard from "../../components/CourseCard";
 import Filter from "../../components/Filter";
+import { useUser } from "../../context/UserContext";
 
 function Courses() {
   const {
@@ -11,7 +12,7 @@ function Courses() {
     isError,
     error,
   } = useQuery({ queryKey: ["courses"], queryFn: getAllCourses });
-
+  const { user } = useUser();
   const [filter, setFilter] = useState([]);
   useEffect(() => {
     setFilter(courses);
@@ -28,7 +29,7 @@ function Courses() {
   }
 
   return (
-    <div className="flex flex-col jsutify-center sm:flex-row py-5 w-full items-start gap-5">
+    <div className="flex flex-col mt-8 jsutify-center sm:flex-row py-5 pr-10 w-full items-start gap-5">
       <div className="border-4 w-full sm:w-fit">
         <Filter onFilterChange={handleFilterChange} courses={courses} />
       </div>

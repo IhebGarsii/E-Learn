@@ -21,7 +21,8 @@ export const signin = async (data) => {
 
 export const signup = async (formData) => {
   try {
-    const response = await fetch(`${BASE_URL}/signup`, {
+    console.log(formData.getAll("password"));
+    const response = await fetch(`${BASE_URL}/register`, {
       method: "POST",
       body: formData,
     });

@@ -3,6 +3,8 @@ import { Routes, Route, Link } from "react-router-dom";
 import Courses from "../pages/courses/Courses";
 import Login from "../pages/login/Login";
 import InstructorCourses from "../pages/InstructorCourses";
+import SignUp from "../pages/SignUp";
+import CourseDetail from "../pages/CourseDetail";
 
 function SideBar() {
   const [open, setOpen] = useState(false);
@@ -74,7 +76,9 @@ function SideBar() {
         <Routes>
           <Route path="/Courses" element={<Courses />} />
           <Route path="login" element={<Login />} />
+          <Route path="signup" element={<SignUp />} />
           <Route path="coursesDarshboard" element={<InstructorCourses />} />
+          <Route path="/course/:idCourse" element={<CourseDetail />} />
         </Routes>
       </div>
     </div>

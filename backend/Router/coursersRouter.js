@@ -32,7 +32,7 @@ const uploadFields = upload.fields([
   { name: "video", maxCount: 5 },
 ]);
 coursesRouter.get("/getAllCourses", getAllCourses);
-coursesRouter.get("/getCourse/:idUser", getCourse);
+coursesRouter.get("/getCourse/:idCourse", getCourse);
 coursesRouter.post("/AddCourse", uploadFields, AddCourse);
 coursesRouter.delete("/deleteCourse/:idUser/:idCourse", deleteCourse);
 coursesRouter.put("/updateCourse/:idUser/:idCourse", updateCourse);

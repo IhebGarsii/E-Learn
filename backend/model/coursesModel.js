@@ -11,10 +11,12 @@ const coursesModel = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "userModel",
   },
-  studentsId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "userModel",
-  },
+  studentsId: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "userModel",
+    },
+  ],
 
   duration: { type: String },
   language: { type: String },
@@ -22,7 +24,7 @@ const coursesModel = new Schema({
   thumbnail: { type: String },
   headTags: [{ type: String }],
   tags: [{ type: String }],
-  video: { type: String },
+  video: [{ title: { type: String },videoList:[{}] }],
   avgRate: {
     rate: { type: Number, default: 0 },
     nbRate: { type: Number, default: 0 },

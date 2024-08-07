@@ -71,7 +71,7 @@ function InstructorCourses() {
   };
 
   return (
-    <div className="w-full min-h-screen lg:w-[40%] mx-auto">
+    <div className="w-full min-h-screen mt-20 lg:w-[40%] mx-auto">
       <form
         onSubmit={handleSubmit(submitCourse)}
         className="w-full flex flex-col gap-2"
