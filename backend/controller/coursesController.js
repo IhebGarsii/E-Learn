@@ -67,7 +67,7 @@ const AddCourse = async (req, res) => {
       ? req.files["video"][0].originalname
       : null;
     // Create the course document with the uploaded files
-    console.log(thumbnail);
+    console.log(req.body.instructorId);
     const course = await coursesModel.create({
       ...req.body,
       thumbnail,

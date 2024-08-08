@@ -13,25 +13,26 @@ function CourseContent({ video }) {
 
   return (
     <div className="border-2">
-      {video.map((vid, index) => (
-        <div key={index}>
-          <h1
-            className="flex  items-center  gap-2"
-            onClick={() => handleDrop(index)}
-          >
-            <img className="w-3  " src={img} /> <span> {vid.title}</span>
-          </h1>
-          {dropdowns[index] && (
-            <ul>
-              {vid.videoList.map((video, vidIndex) => (
-                <div className="flex" key={vidIndex}>
-                  <span className="flex flex-col">{video.videoName}:</span>
-                </div>
-              ))}
-            </ul>
-          )}
-        </div>
-      ))}
+      {video &&
+        video.map((vid, index) => (
+          <div key={index}>
+            <h1
+              className="flex  items-center  gap-2"
+              onClick={() => handleDrop(index)}
+            >
+              <img className="w-3  " src={img} /> <span> {vid.title}</span>
+            </h1>
+            {dropdowns[index] && (
+              <ul>
+                {vid.videoList.map((video, vidIndex) => (
+                  <div className="flex" key={vidIndex}>
+                    <span className="flex flex-col">{video.videoName}:</span>
+                  </div>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))}
     </div>
   );
 }

@@ -31,16 +31,9 @@ function CourseDetail() {
   if (!course) return <div>No course found.</div>;
 
   return (
-    <div className="mt-20 flex-col px-5 md:w-[70%] mx-auto ">
-      <div className="flex flex-col md:flex-row gap-5">
-        <video width="640" height="360" controls>
-          <source
-            src="https://www.youtube.com/watch?v=fQTsENCG7YU"
-            type="video/mp4"
-          />
-          Your browser does not support the video tag.
-        </video>
-        <div className=" flex flex-col">
+    <div className="flex flex-col md:flex-row mt-20 lg:w-[90%] mx-auto gap-10 items-center ">
+      <div className="flex-1 md:flex-[1_1_70%] p-4">
+        <div className="md:h-40% ">
           <h1 className="text-4xl">{course.title}</h1>
           <div className="flex   items-center">
             <span> {course.avgRate.rate} </span>
@@ -57,61 +50,82 @@ function CourseDetail() {
           <span>{course.studentsId.length} students</span>
           <span>Created By {course.instructorId} </span>
           <span>Last Updated {course.lastUpdated} </span>
-          <div className=" flex flex-col w-[100%] gap-4  ">
-            <span className="text-5xl font-bold  "> ${course.price} </span>
-            <button className=" w-[90%] md:w-[70%] bg-dark-blue text-white text-xl rounded h-10 mx-auto   ">
-              Buy Now
-            </button>
+        </div>
+        <div className="shadow-md border mb-2 p-2 mt-2 box-sizing-border-box">
+          <h1 className="text-lg font-bold">What you'll learn</h1>
+          <div className="md:grid md:grid-cols-2 gap-2">
+            {course.learnTarget.map((learn, index) => (
+                <p key={index} className="p-1 text-sm">
+                  &#10003; {learn}
+                </p>
+            ))}
+          </div>
+        </div>
+
+        <div className="">
+          <h1 className="font-semibold">This course includes</h1>
+          <ul>
+            <li className="text-sm flex   items-center gap-2">
+              <FaVideo /> {course.videoDuration} hours on-demand video
+            </li>
+            <li className="text-sm flex   items-center gap-2">
+              <MdArticle /> {course.articles}
+            </li>
+            <li className="text-sm flex   items-center gap-2">
+              <FaCloudDownloadAlt /> {course.downloadNb}
+            </li>
+            <li className="text-sm flex   items-center gap-2">
+              <MdAccessTimeFilled /> {course.timeAccess}
+            </li>
+          </ul>
+        </div>
+        <CourseContent video={course.video} />
+        <h1 className="text-xl font-bold">Requirments: </h1>
+        <p> {course.requirments} </p>
+        <h1 className="text-xl font-bold">Description: </h1>
+        <p> {course.description} </p>
+      </div>
+      <div className=" flex-1 md:flex-[1_1_30%] shadow-md border mb-20   p-4">
+        <div className="flex w-[100%] flex-col gap-5">
+          <video className=" w-full h-52 " controls>
+            <source
+              src="https://www.youtube.com/watch?v=fQTsENCG7YU"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+          <div className=" flex flex-col">
+            <div className=" flex flex-col w-[100%] gap-4  ">
+              <span className="text-4xl font-bold  "> ${course.price} </span>
+              <button className=" w-[90%] md:w-[70%] bg-dark-blue text-white text-xl rounded h-10 mx-auto   ">
+                Add to cart
+              </button>
+              <button className=" w-[90%] md:w-[70%] border-2 border-black text-black text-xl rounded h-10 mx-auto   ">
+                Buy Now
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="w-[100%]    ">
+          <h2>Explore Related Topics</h2>
+          <div className="flex gap-2 ">
+            {course.tags.map((tag, index) => (
+              <span
+                key={index}
+                className="flex items-center justify-center rounded-lg font-semibold  w-20 min-h-10 bg-white border-2 border-black"
+              >
+                {tag}
+              </span>
+            ))}
           </div>
         </div>
       </div>
-      <div className="">
-        <h2>Explore Related Topics</h2>
-        <div className="flex gap-2 ">
-          {course.tags.map((tag, index) => (
-            <span
-              key={index}
-              className="flex items-center justify-center rounded-lg font-semibold  w-20 min-h-10 bg-white border-2 border-black"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
+      <div className="fixed bottom-0 bg-white w-[77%]     flex justify-center  py-3 md:hidden ">
+        <span className="text-4xl font-bold  "> ${course.price} </span>
+        <button className="  bg-dark-blue  text-white text-xl rounded h-12 w-[80%] mx-auto    ">
+          Buy Now
+        </button>
       </div>
-      <div className="shadow-md border mb-5 p-2 mt-2">
-        <h1>What you'll learn</h1>
-        <div className=" p-1 ">
-          {course.learnTarget.map((learn, index) => (
-            <p key={index} className="p-1 text-sm ">
-              {" "}
-              &#10003; {learn}{" "}
-            </p>
-          ))}
-        </div>
-      </div>
-      <div className="">
-        <h1 className="font-semibold">This course includes</h1>
-        <ul>
-          <li className="text-sm flex   items-center gap-2">
-            <FaVideo /> {course.videoDuration} hours on-demand video
-          </li>
-          <li className="text-sm flex   items-center gap-2">
-            <MdArticle /> {course.articles}
-          </li>
-          <li className="text-sm flex   items-center gap-2">
-            <FaCloudDownloadAlt /> {course.downloadNb}
-          </li>
-          <li className="text-sm flex   items-center gap-2">
-            <MdAccessTimeFilled /> {course.timeAccess}
-          </li>
-        </ul>
-      </div>
-
-      <CourseContent video={course.video} />
-      <h1 className="text-xl font-bold">Requirments: </h1>
-      <p> {course.requirments} </p>
-      <h1 className="text-xl font-bold">Description: </h1>
-      <p> {course.description} </p>
     </div>
   );
 }

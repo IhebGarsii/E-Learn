@@ -21,10 +21,17 @@ const coursesModel = new Schema({
   duration: { type: String },
   language: { type: String },
   format: { type: String },
+
+  learnTarget: [{ type: String }],
+  downloadNb: { type: String },
+  timeAccess: { type: String },
+  articles: { type: String },
+  videoDuration: { type: String },
+
   thumbnail: { type: String },
   headTags: [{ type: String }],
   tags: [{ type: String }],
-  video: [{ title: { type: String },videoList:[{}] }],
+  video: [{ title: { type: String }, videoList: [{}] }],
   avgRate: {
     rate: { type: Number, default: 0 },
     nbRate: { type: Number, default: 0 },

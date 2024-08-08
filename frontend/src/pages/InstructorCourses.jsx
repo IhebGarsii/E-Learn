@@ -13,13 +13,14 @@ function InstructorCourses() {
   } = useForm();
   const [tags, setTags] = useState([]);
   const [headTags, setHeadTags] = useState([]);
+  const [target, setTarget] = useState([]);
 
   const handleTagsChange = (newTags) => {
     setTags(newTags);
     setValue(
       "tags",
       newTags.map((tag) => tag.text)
-    ); // Update form state
+    );
   };
 
   const handleHeadTagsChange = (newTags) => {
@@ -27,7 +28,14 @@ function InstructorCourses() {
     setValue(
       "headTags",
       newTags.map((tag) => tag.text)
-    ); // Update form state
+    );
+  };
+  const handleTargetChange = (newTags) => {
+    setTarget(newTags);
+    setValue(
+      "learnTarget",
+      newTags.map((tag) => tag.text)
+    );
   };
 
   const { mutate, isLoading, isError, isSuccess, error } = useMutation({
@@ -41,7 +49,12 @@ function InstructorCourses() {
 
     // Append form fields to FormData
     Object.keys(data).forEach((key) => {
-      if (key !== "tags" && key !== "headTags" && data[key]) {
+      if (
+        key !== "tags" &&
+        key !== "headTags" &&
+        key !== "learnTarget" &&
+        data[key]
+      ) {
         formData.append(key, data[key]);
       }
     });
@@ -55,7 +68,9 @@ function InstructorCourses() {
     if (data.headTags && Array.isArray(data.headTags)) {
       data.headTags.forEach((tag) => formData.append("headTags", tag));
     }
-
+    if (data.learnTarget && Array.isArray(data.learnTarget)) {
+      data.learnTarget.forEach((tag) => formData.append("learnTarget", tag));
+    }
     // Handle file upload for thumbnail
     if (data.thumbnail && data.thumbnail[0]) {
       formData.append("thumbnail", data.thumbnail[0]);
@@ -65,7 +80,9 @@ function InstructorCourses() {
     if (data.video && data.video[0]) {
       formData.append("video", data.video[0]);
     }
-    formData.append("instructorId", localStorage.getItem("idUser"));
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log(user.email);
+    formData.append("instructorId", user._id);
     // Send form data to the API
     mutate(formData);
   };
@@ -140,13 +157,43 @@ function InstructorCourses() {
           type="text"
           className="bg-gray-200 rounded-md"
         />
-
+        <label htmlFor="format">requirments</label>
+        <input
+          {...register("requirments")}
+          type="text"
+          className="bg-gray-200 rounded-md"
+        />
+        <label htmlFor="format">Articles Number</label>
+        <input
+          {...register("articles")}
+          type="text"
+          className="bg-gray-200 rounded-md"
+        />
+        <label htmlFor="videoDuration">Video Hours</label>
+        <input
+          {...register("videoDuration")}
+          type="text"
+          className="bg-gray-200 rounded-md"
+        />
+        <label htmlFor="downloadNb">Downloadable resources</label>
+        <input
+          {...register("downloadNb")}
+          type="text"
+          className="bg-gray-200 rounded-md"
+        />
+        <label htmlFor="timeAccess">Aceess Time</label>
+        <input
+          {...register("timeAccess")}
+          type="text"
+          className="bg-gray-200 rounded-md"
+        />
         <label htmlFor="tags">Tags:</label>
         <TagInput tags={tags} onTagsChange={handleTagsChange} />
 
         <label htmlFor="headTags">Head Tags:</label>
         <TagInput tags={headTags} onTagsChange={handleHeadTagsChange} />
-
+        <label htmlFor="learnTarget">Target Learn:</label>
+        <TagInput tags={target} onTagsChange={handleTargetChange} />
         <label htmlFor="thumbnail">Thumbnail:</label>
         <input
           {...register("thumbnail")}
@@ -174,7 +221,6 @@ function InstructorCourses() {
         {isSuccess && (
           <p className="text-green-500">Course added successfully!</p>
         )}
-     
       </form>
     </div>
   );
